@@ -30,8 +30,11 @@ class DataFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
 
-            val intent = Intent(activity, ContactForm::class.java)
-            startActivity(intent)
+
+
+           // fragment_data
+            /*val intent = Intent(activity, ContactForm::class.java)
+            startActivity(intent)*/
            // StartActivity(Intent(this, ContactForm::class.java))
         }
     }
@@ -41,7 +44,11 @@ class DataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+
+
         return inflater.inflate(R.layout.fragment_data, container, false)
+
 
     }
 
