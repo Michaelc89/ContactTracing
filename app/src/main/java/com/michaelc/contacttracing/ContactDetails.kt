@@ -8,12 +8,12 @@ class ContactDetails {
 
     var id: Int
     var name: String
-    var number: Double
-    var time: Time
-    var date: Date
+    var number: String
+    var time: String
+    var date: String
 
 
-    constructor(id: Int,name: String,number: Double,time: Time,date: Date) {
+    constructor(id: Int,name: String,number: String,time: String,date: String) {
         this.id = id
         this.name = name
         this.number = number

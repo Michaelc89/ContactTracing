@@ -1,8 +1,10 @@
 package com.michaelc.contacttracing.fragments
 
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -10,6 +12,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
+import com.michaelc.contacttracing.ContactDetails
 import com.michaelc.contacttracing.ContactForm
 import com.michaelc.contacttracing.MainActivity
 import com.michaelc.contacttracing.R
@@ -17,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.Objects.toString
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,10 +61,17 @@ class FormFragment : Fragment() {
 
     }
 
+    var calObj = Calendar.getInstance()
 
+@RequiresApi(Build.VERSION_CODES.M)
 override fun onStart(){
     super.onStart()
     try {
+        //==============================================================
+
+
+
+        //==============================================================
         var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
 
         //set the formats for current date and time
@@ -72,6 +84,7 @@ override fun onStart(){
         //get the time and then set it
         val  currentTime: String = timeFormat.format(Date().time)
         timeLabel.setText(currentTime.toString())
+
 
 
         //set the date when button is clicked
@@ -102,15 +115,46 @@ override fun onStart(){
                 selectedTime.set(Calendar.HOUR_OF_DAY,hourOfDay)
                 selectedTime.set(Calendar.MINUTE,minute)
                 timeLabel.text = timeFormat.format(selectedTime.time)
+
+                calObj.time=selectedTime.time
             },
                 now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),false)
             timePicker.show()
+
 
         }
     }
     catch(e: Exception){
         Log.d("LIVELINE",e.toString())
     }
+
+    buttonCreate.setOnClickListener {
+
+try {
+
+//set inputs to class
+    val cont = ContactDetails(
+        1,
+        Name.text.toString(),
+        Number.text.toString(),
+        timeLabel.text.toString(),
+        dateLabel.text.toString()
+    )
+}
+catch (e:Exception)
+{
+    Log.d("Darcy",e.toString())
+   /* val builder = AlertDialog.Builder(this.context)
+    builder.setTitle("Androidly Alert")
+    builder.setMessage(e.toString())
+            builder.setPositiveButton("Continuar") { dialog, which ->
+    }
+        val dialog: AlertDialog = builder.create()
+    dialog.show()*/
+
+}
+    }
+
 }
 
 
