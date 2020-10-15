@@ -1,8 +1,10 @@
 package com.michaelc.contacttracing.fragments
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -13,15 +15,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.michaelc.contacttracing.ContactDetails
-import com.michaelc.contacttracing.ContactForm
-import com.michaelc.contacttracing.MainActivity
-import com.michaelc.contacttracing.R
+import com.michaelc.contacttracing.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_form.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.Objects.toString
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,10 +44,10 @@ class FormFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
 
-
             dateLabel.setText("HELP")
             //StartActivity(Intent(this, MainActivity::class.java))
 
+            //var db = DatabaseHandler(context)
         }
     }
 
@@ -63,100 +63,117 @@ class FormFragment : Fragment() {
 
     var calObj = Calendar.getInstance()
 
-@RequiresApi(Build.VERSION_CODES.M)
-override fun onStart(){
-    super.onStart()
-    try {
-        //==============================================================
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onStart() {
+        //==========================================================================
+        //             INITIATE THE DB
+        val context: Context = this.context ?: return // or if block
+
+        var db = DatabaseHandler(context)
+        var a = DatabaseHandler(this.context!!)
+
+        //===========================================================================
+        super.onStart()
+        try {
 
 
 
-        //==============================================================
-        var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
+            var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
 
-        //set the formats for current date and time
-        val timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
-        val simpleDateFormat = SimpleDateFormat("dd/MMM/YY")
+            //set the formats for current date and time
+            val timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
+            val simpleDateFormat = SimpleDateFormat("dd/MMM/YY")
 
-        val currentDate: String = simpleDateFormat.format(Date())
-        //set date to label
-        dateLabel.setText(currentDate.toString())
-        //get the time and then set it
-        val  currentTime: String = timeFormat.format(Date().time)
-        timeLabel.setText(currentTime.toString())
-
+            val currentDate: String = simpleDateFormat.format(Date())
+            //set date to label
+            dateLabel.setText(currentDate.toString())
+            //get the time and then set it
+            val currentTime: String = timeFormat.format(Date().time)
+            timeLabel.setText(currentTime.toString())
 
 
-        //set the date when button is clicked
-        dateLabel.setOnClickListener {
-            val now = Calendar.getInstance()
-            val datePicker = DatePickerDialog(
-                this.requireActivity(), DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
-                    val selectedDate = Calendar.getInstance()
-                    selectedDate.set(Calendar.YEAR, year)
-                    selectedDate.set(Calendar.MONTH, month)
-                    selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-                    val date2 = formate.format(selectedDate.time)//seleccted date to be put in class
-                    dateLabel.setText(date2.toString())
-                    //Log.d("Car",selectedDate.toString())
-                    //Toast.makeText(this,"date : " + selectedDate,Toast.LENGTH_SHORT).show()
-                },
-                now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.show()
+            //set the date when button is clicked
+            dateLabel.setOnClickListener {
+                val now = Calendar.getInstance()
+                val datePicker = DatePickerDialog(
+                    this.requireActivity(),
+                    DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+                        val selectedDate = Calendar.getInstance()
+                        selectedDate.set(Calendar.YEAR, year)
+                        selectedDate.set(Calendar.MONTH, month)
+                        selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                        val date2 =
+                            formate.format(selectedDate.time)//seleccted date to be put in class
+                        dateLabel.setText(date2.toString())
+                        //Log.d("Car",selectedDate.toString())
+                        //Toast.makeText(this,"date : " + selectedDate,Toast.LENGTH_SHORT).show()
+                    },
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+                )
+                datePicker.show()
+            }
+            timeLabel.setOnClickListener {
+                val now = Calendar.getInstance()
+                var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
+
+
+                val timePicker = TimePickerDialog(
+                    this.requireActivity(),
+                    TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                        val selectedTime = Calendar.getInstance()
+                        selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                        selectedTime.set(Calendar.MINUTE, minute)
+                        timeLabel.text = timeFormat.format(selectedTime.time)
+
+                        calObj.time = selectedTime.time
+                    },
+                    now.get(Calendar.HOUR_OF_DAY),
+                    now.get(Calendar.MINUTE),
+                    false
+                )
+                timePicker.show()
+
+
+            }
+        } catch (e: Exception) {
+            Log.d("LIVELINE", e.toString())
         }
-        timeLabel.setOnClickListener {
-            val now = Calendar.getInstance()
-            var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
+
+        buttonCreate.setOnClickListener {
+
+            try {
+                    if (Name.text != null||Number.text != null||timeLabel.text!=null||dateLabel.text!=null ) {
+                        //set inputs to class
+                        val cont = ContactDetails(
+                            1,
+                            Name.text.toString(),
+                            Number.text.toString(),
+                            timeLabel.text.toString(),
+                            dateLabel.text.toString()
+
+                        )
+
+                        db.insertData(cont)
+
+                        //db.insertData}
+                    }
+                else
+                    {
+                        val dialogBuilder = AlertDialog.Builder(activity!!)
+                        dialogBuilder.setTitle("Warning")
+                        dialogBuilder.setMessage("All fields must be filled in!!")
+                        dialogBuilder.show()
 
 
-            val timePicker = TimePickerDialog(this.requireActivity(), TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
-                val selectedTime = Calendar.getInstance()
-                selectedTime.set(Calendar.HOUR_OF_DAY,hourOfDay)
-                selectedTime.set(Calendar.MINUTE,minute)
-                timeLabel.text = timeFormat.format(selectedTime.time)
-
-                calObj.time=selectedTime.time
-            },
-                now.get(Calendar.HOUR_OF_DAY),now.get(Calendar.MINUTE),false)
-            timePicker.show()
-
-
+                    }
+            } catch (e: Exception) {
+                Log.d("Darcy", e.toString())
+            }
         }
+
     }
-    catch(e: Exception){
-        Log.d("LIVELINE",e.toString())
-    }
-
-    buttonCreate.setOnClickListener {
-
-try {
-
-//set inputs to class
-    val cont = ContactDetails(
-        1,
-        Name.text.toString(),
-        Number.text.toString(),
-        timeLabel.text.toString(),
-        dateLabel.text.toString()
-    )
-}
-catch (e:Exception)
-{
-    Log.d("Darcy",e.toString())
-   /* val builder = AlertDialog.Builder(this.context)
-    builder.setTitle("Androidly Alert")
-    builder.setMessage(e.toString())
-            builder.setPositiveButton("Continuar") { dialog, which ->
-    }
-        val dialog: AlertDialog = builder.create()
-    dialog.show()*/
-
-}
-    }
-
-}
-
 
 
     companion object {
