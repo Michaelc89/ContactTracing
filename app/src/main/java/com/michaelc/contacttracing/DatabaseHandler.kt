@@ -14,15 +14,15 @@ val COL_TIME="time"
 val COL_DATE="date"
 val COL_ID="id"
 
-class DatabaseHandler(var context: Context): SQLiteOpenHelper(context, DATABASE_NAME,null,1) {
+class DatabaseHandler(var context: Context): SQLiteOpenHelper(context,DATABASE_NAME,null,1) {
     override fun onCreate(db: SQLiteDatabase?) {
 
-        val createTable = "CREATE TABLE" + TABLE_NAME + "("+
-                COL_ID+"INTEGER PRIMARY KEY AUTOINCREMENT,"+
-                COL_NAME+"VARCHAR(256),"+
-                COL_NUMBER+"VARCHAR(256),"+
-                COL_DATE+"VARCHAR(256),"+
-                COL_TIME+"VARCHAR(256);"
+        val createTable = "CREATE TABLE " + TABLE_NAME + " ("+
+                COL_ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                COL_NAME+" VARCHAR(256),"+
+                COL_NUMBER+" VARCHAR(256),"+
+                COL_DATE+" VARCHAR(256),"+
+                COL_TIME+" VARCHAR(256));"
 
         db?.execSQL(createTable)
     }
@@ -35,23 +35,21 @@ class DatabaseHandler(var context: Context): SQLiteOpenHelper(context, DATABASE_
     // INSERT DATA FUNCTION
     //===========================================================
 
-    fun insertData(cd: ContactDetails){
+    fun insertData(cd: ContactDetails) {
         val db = this.writableDatabase
         var CV = ContentValues()
-        CV.put(COL_NAME,cd.name)
-        CV.put(COL_NUMBER,cd.number)
-        CV.put(COL_DATE,cd.date)
-        CV.put(COL_TIME,cd.time)
-        var result = db.insert(TABLE_NAME,null,CV)
+        CV.put(COL_NAME, cd.name)
+        CV.put(COL_NUMBER, cd.number)
+        CV.put(COL_DATE, cd.date)
+        CV.put(COL_TIME, cd.time)
+        var result = db.insert(TABLE_NAME, null, CV)
         //https://www.youtube.com/watch?v=OxHNcCXnxnE   5:03
-        if(result==-1.toLong())
-        {
+        if (result == -1.toLong()) {
             Toast.makeText(context, "INSERT FAILED", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show()
         }
-        else
-        {
-            Toast.makeText(context,"Success",Toast.LENGTH_SHORT).show()
-        }
+    }
 
         //===========================================================
         // READ DATA FUNCTION
@@ -112,4 +110,4 @@ class DatabaseHandler(var context: Context): SQLiteOpenHelper(context, DATABASE_
 
 
     }
-}
+

@@ -1,13 +1,18 @@
 package com.michaelc.contacttracing.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.michaelc.contacttracing.ContactForm
+import com.michaelc.contacttracing.DatabaseHandler
 import com.michaelc.contacttracing.R
+import kotlinx.android.synthetic.main.fragment_data.*
+import java.lang.Exception
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -52,6 +57,39 @@ class DataFragment : Fragment() {
 
     }
 
+    override fun onStart() {
+
+        loadDB()
+        super.onStart()
+
+    }
+
+    fun loadDB(){
+        try {
+
+
+            //==========================================================================
+            //             INITIATE THE DB
+            val context: Context = this.context ?: return // or if block
+
+            var db = DatabaseHandler(context)
+            //var a = DatabaseHandler(this.context!!)
+
+
+            //===========================================================================
+
+            var data = db.readData()
+            tvName.text = ""
+            for (i in 0..(data.size - 1)) {
+                tvName.append(data.get(i).name + "\n")
+                //            tvName.append(data.get(i).id.toString() + " " + data.get(i).name + " " + data.get(i).number + "\n")
+            }
+        }
+        catch (e:Exception)
+        {
+            Log.d("A MAN", e.toString())
+        }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of

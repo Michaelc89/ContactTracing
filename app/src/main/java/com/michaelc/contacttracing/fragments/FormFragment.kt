@@ -70,7 +70,7 @@ class FormFragment : Fragment() {
         val context: Context = this.context ?: return // or if block
 
         var db = DatabaseHandler(context)
-        var a = DatabaseHandler(this.context!!)
+        //var a = DatabaseHandler(this.context!!)
 
         //===========================================================================
         super.onStart()
@@ -156,6 +156,7 @@ class FormFragment : Fragment() {
                         )
 
                         db.insertData(cont)
+
 
                         //db.insertData}
                     }
