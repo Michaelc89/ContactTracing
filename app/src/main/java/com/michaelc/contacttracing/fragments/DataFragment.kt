@@ -8,9 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.michaelc.contacttracing.ContactForm
-import com.michaelc.contacttracing.DatabaseHandler
-import com.michaelc.contacttracing.R
+import com.michaelc.contacttracing.*
 import kotlinx.android.synthetic.main.fragment_data.*
 import java.lang.Exception
 
@@ -28,6 +26,7 @@ class DataFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,6 +59,10 @@ class DataFragment : Fragment() {
     override fun onStart() {
 
         loadDB()
+
+        //Listview listview
+
+
         super.onStart()
 
     }
@@ -77,13 +80,39 @@ class DataFragment : Fragment() {
 
 
             //===========================================================================
-
             var data = db.readData()
-            tvName.text = ""
+            //  PULLING THE DATA AND ADDING IT TO A MUTABLE LIST
+            //declaring an empty mutable list of strings for DB data
+            //val listItems = arrayOfNulls<String>(data.size)
+
+             var mutableListData = ArrayList<ContactDetails>()
+             //val contact = mutableListData.iterator()
+
+             for(item in data)
+             {
+                 mutableListData.add(item)
+                 Log.d("Gary",item.toString())
+             }
+
+            val adapter = ItemAdapter(context, mutableListData)
+            listView.adapter = adapter
+
+            /*tvName.text = ""
             for (i in 0..(data.size - 1)) {
                 tvName.append(data.get(i).name + "\n")
                 //            tvName.append(data.get(i).id.toString() + " " + data.get(i).name + " " + data.get(i).number + "\n")
-            }
+            }*/
+
+            // 1
+           // val recipe = listView.getItem(position) as ContactDetails
+
+// 2
+            /*titleTextView.text = recipe.title
+            subtitleTextView.text = recipe.description
+            detailTextView.text = recipe.label*/
+
+
+
         }
         catch (e:Exception)
         {
