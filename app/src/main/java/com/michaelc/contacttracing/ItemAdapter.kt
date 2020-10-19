@@ -1,6 +1,7 @@
 package com.michaelc.contacttracing
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +12,14 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_row.view.*
 
 
-class ItemAdapter(val context: Context,
-                  val dataSource: ArrayList<ContactDetails>) :
+class ItemAdapter(
+    val context: Context,
+    val dataSource: ArrayList<ContactDetails>
+) :
     BaseAdapter() {
 
-    private val inflater: LayoutInflater
-            = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     //1
     override fun getCount(): Int {
@@ -35,22 +38,18 @@ class ItemAdapter(val context: Context,
 
     //4
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        // Get view for row item
-        val rowView = inflater.inflate(R.layout.item_row, parent, false)
+        // access the file item row to display the custom listview
 
+            val rowView = inflater.inflate(R.layout.item_row, parent, false)
+           // Get the name of an element on the page
+            val nameTextView = rowView.findViewById(R.id.tvName) as TextView
 
+            //set the data as a class ContactDetails
+            val data = getItem(position) as ContactDetails
+            //display the name
+            nameTextView.setText(data.name.toString())
 
+            return rowView
 
-            // Get the name of an element on the page
-        val nameTextView = rowView.findViewById(R.id.tvName) as TextView
-
-        //set the data as a class ContactDetails
-        val data = getItem(position) as ContactDetails
-
-
-
-
-
-        return rowView
     }
 }

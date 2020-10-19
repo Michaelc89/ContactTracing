@@ -1,5 +1,6 @@
 package com.michaelc.contacttracing.fragments
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -7,10 +8,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.michaelc.contacttracing.*
 import kotlinx.android.synthetic.main.fragment_data.*
+import kotlinx.android.synthetic.main.item_row.*
+import kotlinx.android.synthetic.main.item_row.view.*
 import java.lang.Exception
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,12 +41,6 @@ class DataFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
 
-
-
-           // fragment_data
-            /*val intent = Intent(activity, ContactForm::class.java)
-            startActivity(intent)*/
-           // StartActivity(Intent(this, ContactForm::class.java))
         }
     }
 
@@ -48,42 +49,26 @@ class DataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-
-
-
         return inflater.inflate(R.layout.fragment_data, container, false)
-
-
     }
 
     override fun onStart() {
 
+        onEdit()
         loadDB()
-
-        //Listview listview
-
-
         super.onStart()
-
     }
 
     fun loadDB(){
         try {
-
-
             //==========================================================================
             //             INITIATE THE DB
             val context: Context = this.context ?: return // or if block
 
             var db = DatabaseHandler(context)
-            //var a = DatabaseHandler(this.context!!)
-
-
             //===========================================================================
             var data = db.readData()
-            //  PULLING THE DATA AND ADDING IT TO A MUTABLE LIST
-            //declaring an empty mutable list of strings for DB data
-            //val listItems = arrayOfNulls<String>(data.size)
+
 
              var mutableListData = ArrayList<ContactDetails>()
              //val contact = mutableListData.iterator()
@@ -94,31 +79,87 @@ class DataFragment : Fragment() {
                  Log.d("Gary",item.toString())
              }
 
+
+            //====================================================
+            //EDIT DATA
+            //====================================================
+
+
+
             val adapter = ItemAdapter(context, mutableListData)
             listView.adapter = adapter
 
-            /*tvName.text = ""
-            for (i in 0..(data.size - 1)) {
-                tvName.append(data.get(i).name + "\n")
-                //            tvName.append(data.get(i).id.toString() + " " + data.get(i).name + " " + data.get(i).number + "\n")
-            }*/
 
-            // 1
-           // val recipe = listView.getItem(position) as ContactDetails
 
-// 2
-            /*titleTextView.text = recipe.title
-            subtitleTextView.text = recipe.description
-            detailTextView.text = recipe.label*/
+           var positions:Int
+             positions = data.size
 
+
+                /*val inflater: LayoutInflater =
+                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+                val holder = listView //inflater.inflate(R.layout.fragment_data, parent, false)
+                if (positions % 2 == 0) {
+                    holder.llMain.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorLightGray
+                        )
+                    )
+                } else {
+                    holder.llMain.setBackgroundColor(
+                        ContextCompat.getColor(
+                            context,
+                            R.color.colorWhite
+                        )
+                    )
+                }*/
+
+            listView.ivEdit.setOnClickListener(){
+
+                //val image_view = findViewById(R.id.ivEdit) as ImageView
+
+
+                var editContact =  data as ContactDetails
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Androidly Alert")
+                builder.setMessage("We have a message" + editContact.name)
+//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
+
+                builder.setPositiveButton(android.R.string.yes) { dialog, which ->
+                    Toast.makeText(context,
+                        android.R.string.yes, Toast.LENGTH_SHORT).show()
+                }
+
+                builder.setNegativeButton(android.R.string.no) { dialog, which ->
+                    Toast.makeText(context,
+                        android.R.string.no, Toast.LENGTH_SHORT).show()
+                }
+
+                builder.setNeutralButton("Maybe") { dialog, which ->
+                    Toast.makeText(context,
+                        "Maybe", Toast.LENGTH_SHORT).show()
+                }
+                builder.show()
+            }
 
 
         }
         catch (e:Exception)
         {
-            Log.d("A MAN", e.toString())
+            Log.d("Simon",e.toString())
+            Log.d("Simon2",e.cause.toString())
+            Log.d("simon3",e.message.toString())
         }
     }
+
+
+
+    fun onEdit()
+    {
+
+    }
+
+
     companion object {
         /**
          * Use this factory method to create a new instance of
