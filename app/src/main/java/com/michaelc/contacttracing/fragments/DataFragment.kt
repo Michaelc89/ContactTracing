@@ -1,6 +1,5 @@
 package com.michaelc.contacttracing.fragments
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -8,15 +7,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.michaelc.contacttracing.*
+import com.michaelc.contacttracing.ContactDetails
+import com.michaelc.contacttracing.DatabaseHandler
+import com.michaelc.contacttracing.ItemAdapter
+import com.michaelc.contacttracing.R
 import kotlinx.android.synthetic.main.fragment_data.*
-import kotlinx.android.synthetic.main.item_row.*
-import kotlinx.android.synthetic.main.item_row.view.*
-import java.lang.Exception
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,22 +39,46 @@ class DataFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
 
+
         }
+
+
+        /*listView.setOnClickListener (){this.view
+
+            Toast.makeText(
+                context,
+                "Maybe", Toast.LENGTH_SHORT
+            ).show()
+
+        }*/
+
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+
+      // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_data, container, false)
+
     }
 
     override fun onStart() {
-
-        onEdit()
         loadDB()
         super.onStart()
+
+
+        listView.setOnItemClickListener(OnItemClickListener { parent, view, position, id -> //do stuff
+            Toast.makeText(
+                context,
+                "Maybe", Toast.LENGTH_SHORT
+            ).show()
+
+
+
+        })
     }
 
     fun loadDB(){
@@ -76,88 +98,43 @@ class DataFragment : Fragment() {
              for(item in data)
              {
                  mutableListData.add(item)
-                 Log.d("Gary",item.toString())
+                 Log.d("Gary", item.toString())
              }
-
 
             //====================================================
             //EDIT DATA
             //====================================================
 
-
-
             val adapter = ItemAdapter(context, mutableListData)
             listView.adapter = adapter
-
-
 
            var positions:Int
              positions = data.size
 
 
-                /*val inflater: LayoutInflater =
-                    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-                val holder = listView //inflater.inflate(R.layout.fragment_data, parent, false)
-                if (positions % 2 == 0) {
-                    holder.llMain.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.colorLightGray
-                        )
-                    )
-                } else {
-                    holder.llMain.setBackgroundColor(
-                        ContextCompat.getColor(
-                            context,
-                            R.color.colorWhite
-                        )
-                    )
-                }*/
-
-            listView.ivEdit.setOnClickListener(){
-
-                //val image_view = findViewById(R.id.ivEdit) as ImageView
-
-
-                var editContact =  data as ContactDetails
-                val builder = AlertDialog.Builder(context)
-                builder.setTitle("Androidly Alert")
-                builder.setMessage("We have a message" + editContact.name)
-//builder.setPositiveButton("OK", DialogInterface.OnClickListener(function = x))
-
-                builder.setPositiveButton(android.R.string.yes) { dialog, which ->
-                    Toast.makeText(context,
-                        android.R.string.yes, Toast.LENGTH_SHORT).show()
-                }
-
-                builder.setNegativeButton(android.R.string.no) { dialog, which ->
-                    Toast.makeText(context,
-                        android.R.string.no, Toast.LENGTH_SHORT).show()
-                }
-
-                builder.setNeutralButton("Maybe") { dialog, which ->
-                    Toast.makeText(context,
-                        "Maybe", Toast.LENGTH_SHORT).show()
-                }
-                builder.show()
-            }
-
-
         }
-        catch (e:Exception)
+        catch (e: Exception)
         {
-            Log.d("Simon",e.toString())
-            Log.d("Simon2",e.cause.toString())
-            Log.d("simon3",e.message.toString())
+            Log.d("Simon", e.toString())
+            Log.d("Simon2", e.cause.toString())
+            Log.d("simon3", e.message.toString())
         }
+
     }
 
 
 
-    fun onEdit()
+
+
+    /*fun doEditData(view: View)
     {
-
-    }
+        doEditData(view)
+        Toast.makeText(
+            context,
+            "You clicked the edit button for id " ,
+            Toast.LENGTH_SHORT
+        ).show()
+    }*/
 
 
     companion object {

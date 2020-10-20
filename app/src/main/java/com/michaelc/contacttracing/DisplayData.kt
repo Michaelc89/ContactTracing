@@ -15,13 +15,9 @@ class DisplayData : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_display_data)
-
-        MClabel.setText("Michael")
-
         //====================================================================
         //**BOTTOM NAVBAR**
         try {
-
 
             val formFragment = FormFragment()
             val dataFragment = DataFragment()
@@ -29,20 +25,13 @@ class DisplayData : AppCompatActivity() {
             bottom_navigation.setOnNavigationItemSelectedListener {
                 when (it.itemId) {
                     R.id.ic_form -> startActivity(Intent(this, ContactForm::class.java))
-
-
                     R.id.ic_data -> Log.d("Boom", "michael Chrystal 08/10/20")
                 }
                 true
             }
-        }
-        catch (e:Exception)
-        {
-            Log.d("ERR",e.toString())
+        } catch (e: Exception) {
+            Log.d("ERR", e.toString())
         }
 
     }
-
-
-    //=============================================================================
-    }
+}

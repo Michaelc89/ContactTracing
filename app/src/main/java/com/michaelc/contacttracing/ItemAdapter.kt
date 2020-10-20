@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_row.view.*
@@ -52,4 +54,31 @@ class ItemAdapter(
             return rowView
 
     }
+
+     fun editRow (position: Int, convertView: View?, parent: ViewGroup): View {
+         val rowView = inflater.inflate(R.layout.item_row, parent, false)
+         val editIcon = rowView.findViewById(R.id.ivEdit) as ImageView
+
+         editIcon.setOnClickListener(){
+             Toast.makeText(
+                 context,
+                 "You clicked the edit button for id " ,
+                 Toast.LENGTH_SHORT
+             ).show()
+         }
+
+
+         return rowView
+     }
+
+
+fun editData()
+{
+
+    Toast.makeText(
+        context,
+        "You clicked the edit button for id " ,
+        Toast.LENGTH_SHORT
+    ).show()
+}
 }
