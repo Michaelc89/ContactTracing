@@ -1,13 +1,14 @@
 package com.michaelc.contacttracing.fragments
 
+import android.app.Dialog
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.michaelc.contacttracing.ContactDetails
@@ -15,6 +16,7 @@ import com.michaelc.contacttracing.DatabaseHandler
 import com.michaelc.contacttracing.ItemAdapter
 import com.michaelc.contacttracing.R
 import kotlinx.android.synthetic.main.fragment_data.*
+import kotlinx.android.synthetic.main.item_row.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -68,6 +70,7 @@ class DataFragment : Fragment() {
     override fun onStart() {
         loadDB()
         super.onStart()
+        val context: Context = this.context ?: return // or if block
 
 
         listView.setOnItemClickListener(OnItemClickListener { parent, view, position, id -> //do stuff
@@ -75,10 +78,34 @@ class DataFragment : Fragment() {
                 context,
                 "Maybe", Toast.LENGTH_SHORT
             ).show()
-
-
-
         })
+
+        /*ivEdit.setOnClickListener {
+            Toast.makeText(
+                context,
+                "edit", Toast.LENGTH_SHORT
+            ).show()
+        }*/
+
+
+/*
+        val dialog = Dialog(context)
+
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.item_row)
+        val img: ImageView = dialog.findViewById(R.id.ivEdit) as ImageView*/
+
+        //dialog.editClick
+
+        /*img.setOnClickListener(View.OnClickListener { // Create custom dialog object
+            Toast.makeText(
+                context,
+                "edit", Toast.LENGTH_SHORT
+            ).show()
+
+
+        })*/
+
     }
 
     fun loadDB(){

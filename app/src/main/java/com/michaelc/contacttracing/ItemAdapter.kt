@@ -42,43 +42,62 @@ class ItemAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         // access the file item row to display the custom listview
 
-            val rowView = inflater.inflate(R.layout.item_row, parent, false)
-           // Get the name of an element on the page
-            val nameTextView = rowView.findViewById(R.id.tvName) as TextView
+        val rowView = inflater.inflate(R.layout.item_row, parent, false)
+        // Get the name of an element on the page
+        val nameTextView = rowView.findViewById(R.id.tvName) as TextView
+// get the image views for edit and delete icons
+        val editIcon = rowView.findViewById(R.id.ivEdit) as ImageView
+        val deleteIcon = rowView.findViewById(R.id.ivDelete) as ImageView
 
-            //set the data as a class ContactDetails
-            val data = getItem(position) as ContactDetails
-            //display the name
-            nameTextView.setText(data.name.toString())
+        editIcon.setOnClickListener {
 
-            return rowView
+            Toast.makeText(
+                context,
+                "edit", Toast.LENGTH_SHORT
+            ).show()
+            editData()
+        }
+
+        deleteIcon.setOnClickListener {
+            Toast.makeText(
+                context,
+                "delete", Toast.LENGTH_SHORT
+            ).show()
+        }
+
+
+        //set the data as a class ContactDetails
+        val data = getItem(position) as ContactDetails
+        //display the name
+        nameTextView.setText(data.name.toString())
+
+        return rowView
 
     }
 
-     fun editRow (position: Int, convertView: View?, parent: ViewGroup): View {
-         val rowView = inflater.inflate(R.layout.item_row, parent, false)
-         val editIcon = rowView.findViewById(R.id.ivEdit) as ImageView
+    fun editRow(position: Int, convertView: View?, parent: ViewGroup): View {
+        val rowView = inflater.inflate(R.layout.item_row, parent, false)
+        val editIcon = rowView.findViewById(R.id.ivEdit) as ImageView
 
-         editIcon.setOnClickListener(){
-             Toast.makeText(
-                 context,
-                 "You clicked the edit button for id " ,
-                 Toast.LENGTH_SHORT
-             ).show()
-         }
-
-
-         return rowView
-     }
+        editIcon.setOnClickListener() {
+            Toast.makeText(
+                context,
+                "You clicked the edit button for id ",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
 
 
-fun editData()
-{
+        return rowView
+    }
 
-    Toast.makeText(
-        context,
-        "You clicked the edit button for id " ,
-        Toast.LENGTH_SHORT
-    ).show()
-}
+
+    fun editData() {
+
+        Toast.makeText(
+            context,
+            "You clicked the edit button for id ",
+            Toast.LENGTH_SHORT
+        ).show()
+    }
 }
