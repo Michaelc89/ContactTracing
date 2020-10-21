@@ -43,18 +43,6 @@ class DataFragment : Fragment() {
 
 
         }
-
-
-        /*listView.setOnClickListener (){this.view
-
-            Toast.makeText(
-                context,
-                "Maybe", Toast.LENGTH_SHORT
-            ).show()
-
-        }*/
-
-
     }
 
     override fun onCreateView(
@@ -80,31 +68,6 @@ class DataFragment : Fragment() {
             ).show()
         })
 
-        /*ivEdit.setOnClickListener {
-            Toast.makeText(
-                context,
-                "edit", Toast.LENGTH_SHORT
-            ).show()
-        }*/
-
-
-/*
-        val dialog = Dialog(context)
-
-        // Include dialog.xml file
-        dialog.setContentView(R.layout.item_row)
-        val img: ImageView = dialog.findViewById(R.id.ivEdit) as ImageView*/
-
-        //dialog.editClick
-
-        /*img.setOnClickListener(View.OnClickListener { // Create custom dialog object
-            Toast.makeText(
-                context,
-                "edit", Toast.LENGTH_SHORT
-            ).show()
-
-
-        })*/
 
     }
 
@@ -134,6 +97,7 @@ class DataFragment : Fragment() {
 
             val adapter = ItemAdapter(context, mutableListData)
             listView.adapter = adapter
+
 
            var positions:Int
              positions = data.size

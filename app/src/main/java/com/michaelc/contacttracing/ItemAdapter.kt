@@ -1,16 +1,15 @@
 package com.michaelc.contacttracing
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.edit_dialog.view.*
 import kotlinx.android.synthetic.main.item_row.view.*
 
 
@@ -51,11 +50,33 @@ class ItemAdapter(
 
         editIcon.setOnClickListener {
 
-            Toast.makeText(
-                context,
-                "edit", Toast.LENGTH_SHORT
-            ).show()
-            editData()
+
+                //Inflate the dialog with custom view
+                val mDialogView = LayoutInflater.from(context).inflate(R.layout.edit_dialog, null)
+                //AlertDialogBuilder
+                val mBuilder = AlertDialog.Builder(context)
+                    .setView(mDialogView)
+                    .setTitle("Edit")
+                //show dialog
+                val  mAlertDialog = mBuilder.show()
+                //login button click of custom layout
+                mDialogView.dialogCancelBtn.setOnClickListener {
+                    //dismiss dialog
+                    mAlertDialog.dismiss()
+                    //get text from EditTexts of custom layout
+                    val name = mDialogView.dialogNameEt.text.toString()
+                    val number = mDialogView.dialogNumberEt.text.toString()
+
+
+
+
+                }
+                //cancel button click of custom layout
+                mDialogView.dialogCancelBtn.setOnClickListener {
+                    //dismiss dialog
+                    mAlertDialog.dismiss()
+                }
+         //   }
         }
 
         deleteIcon.setOnClickListener {
@@ -63,6 +84,8 @@ class ItemAdapter(
                 context,
                 "delete", Toast.LENGTH_SHORT
             ).show()
+
+
         }
 
 
