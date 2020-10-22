@@ -141,10 +141,29 @@ class FormFragment : Fragment() {
             Log.d("LIVELINE", e.toString())
         }
 
+        fun empty(txvn: TextView)
+        {
+            val dialogBuilder = AlertDialog.Builder(activity!!)
+            dialogBuilder.setTitle("Warning")
+            dialogBuilder.setMessage("All fields must be filled in!!\n"+ txvn.hint.toString() +" Is empty")
+            dialogBuilder.show()
+        }
+
         buttonCreate.setOnClickListener {
 
+
+
             try {
-                    if (Name.text != null||Number.text != null||timeLabel.text!=null||dateLabel.text!=null ) {
+                    if (Name.text.isEmpty()) {
+
+                        empty(Name)
+
+                    }
+                else if (Number.text.isEmpty())
+                    {
+                        empty(Number)
+                    }
+                else {
                         //set inputs to class
                         val cont = ContactDetails(
                             1,
@@ -156,16 +175,6 @@ class FormFragment : Fragment() {
                         )
 
                         db.insertData(cont)
-
-
-                        //db.insertData}
-                    }
-                else
-                    {
-                        val dialogBuilder = AlertDialog.Builder(activity!!)
-                        dialogBuilder.setTitle("Warning")
-                        dialogBuilder.setMessage("All fields must be filled in!!")
-                        dialogBuilder.show()
 
 
                     }
