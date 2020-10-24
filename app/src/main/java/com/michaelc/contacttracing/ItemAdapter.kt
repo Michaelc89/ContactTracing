@@ -51,12 +51,29 @@ class ItemAdapter(
         editIcon.setOnClickListener {
 
 
-                //Inflate the dialog with custom view
+            var a = getItem(position) as ContactDetails
+
+            var name: String
+            var number: String
+
+            name = a.name
+            number = a.number
+
+
+
+            //Inflate the dialog with custom view
                 val mDialogView = LayoutInflater.from(context).inflate(R.layout.edit_dialog, null)
                 //AlertDialogBuilder
                 val mBuilder = AlertDialog.Builder(context)
                     .setView(mDialogView)
                     .setTitle("Edit")
+
+            mDialogView.dialogNameEt.setText(name.toString())
+            mDialogView.dialogNumberEt.setText(number.toString())
+
+
+            /*name =   mDialogView.dialogNameEt.text.toString()
+            number =   mDialogView.dialogNumberEt.text.toString()*/
                 //show dialog
                 val  mAlertDialog = mBuilder.show()
                 //login button click of custom layout
@@ -64,8 +81,7 @@ class ItemAdapter(
                     //dismiss dialog
                     mAlertDialog.dismiss()
                     //get text from EditTexts of custom layout
-                    val name = mDialogView.dialogNameEt.text.toString()
-                    val number = mDialogView.dialogNumberEt.text.toString()
+
 
 
 

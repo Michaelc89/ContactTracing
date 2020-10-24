@@ -61,12 +61,12 @@ class DataFragment : Fragment() {
         val context: Context = this.context ?: return // or if block
 
 
-        listView.setOnItemClickListener(OnItemClickListener { parent, view, position, id -> //do stuff
+        /*listView.setOnItemClickListener(OnItemClickListener { parent, view, position, id -> //do stuff
             Toast.makeText(
                 context,
                 "Maybe", Toast.LENGTH_SHORT
             ).show()
-        })
+        })*/
 
 
     }

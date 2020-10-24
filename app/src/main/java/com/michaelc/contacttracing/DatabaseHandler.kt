@@ -66,6 +66,7 @@ class DatabaseHandler(var context: Context): SQLiteOpenHelper(context,DATABASE_N
                     var contD = ContactDetails(1,"1","1","1","1")
                     contD.id = result.getString(result.getColumnIndex(COL_ID)).toInt()
                     contD.name = result.getString(result.getColumnIndex(COL_NAME))
+                    contD.number = result.getString(result.getColumnIndex(COL_NUMBER))
                     contD.time = result.getString(result.getColumnIndex(COL_TIME))
                     contD.date = result.getString(result.getColumnIndex(COL_DATE))
                     list.add(contD)
