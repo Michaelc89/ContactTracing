@@ -43,5 +43,13 @@ class MainActivity : AppCompatActivity() {
             replace(R.id.fl_wrapper, fragment)
             commit()
         }
+
+    object GlobalVariable {
+
+        var mutableListData = ArrayList<ContactDetails>()
+        //var adapter =  ItemAdapter(context, mutableListData)
+    }
+
+
     //=============================================================================
 }

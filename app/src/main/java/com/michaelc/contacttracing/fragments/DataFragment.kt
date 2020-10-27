@@ -11,10 +11,9 @@ import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.michaelc.contacttracing.ContactDetails
-import com.michaelc.contacttracing.DatabaseHandler
-import com.michaelc.contacttracing.ItemAdapter
-import com.michaelc.contacttracing.R
+import com.michaelc.contacttracing.*
+//import com.michaelc.contacttracing.MainActivity.GlobalVariable.adapter
+import com.michaelc.contacttracing.MainActivity.GlobalVariable.mutableListData
 import kotlinx.android.synthetic.main.fragment_data.*
 import kotlinx.android.synthetic.main.item_row.*
 
@@ -40,8 +39,6 @@ class DataFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
-
-
         }
     }
 
@@ -49,10 +46,8 @@ class DataFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-      // Inflate the layout for this fragment
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_data, container, false)
-
     }
 
     override fun onStart() {
@@ -60,18 +55,13 @@ class DataFragment : Fragment() {
         super.onStart()
         val context: Context = this.context ?: return // or if block
 
-
-        /*listView.setOnItemClickListener(OnItemClickListener { parent, view, position, id -> //do stuff
-            Toast.makeText(
-                context,
-                "Maybe", Toast.LENGTH_SHORT
-            ).show()
-        })*/
-
-
     }
 
-    fun loadDB(){
+   /* object GlobalVariable {
+        var mutableListData = ArrayList<ContactDetails>()
+    }*/
+
+    fun loadDB() {
         try {
             //==========================================================================
             //             INITIATE THE DB
@@ -82,39 +72,35 @@ class DataFragment : Fragment() {
             var data = db.readData()
 
 
-             var mutableListData = ArrayList<ContactDetails>()
-             //val contact = mutableListData.iterator()
+             MainActivity.GlobalVariable.mutableListData = ArrayList<ContactDetails>()
+            //val contact = mutableListData.iterator()
 
-             for(item in data)
-             {
-                 mutableListData.add(item)
-                 Log.d("Gary", item.toString())
-             }
+            for (item in data) {
+                MainActivity.GlobalVariable.mutableListData.add(item)
+                Log.d("Gary", item.toString())
+            }
 
             //====================================================
             //EDIT DATA
             //====================================================
-
-            val adapter = ItemAdapter(context, mutableListData)
+            //adapter = null
+            var adapter =  ItemAdapter(context, mutableListData)
             listView.adapter = adapter
 
 
-           var positions:Int
-             positions = data.size
 
 
-        }
-        catch (e: Exception)
-        {
+            var positions: Int
+            positions = data.size
+
+
+        } catch (e: Exception) {
             Log.d("Simon", e.toString())
             Log.d("Simon2", e.cause.toString())
             Log.d("simon3", e.message.toString())
         }
 
     }
-
-
-
 
 
     /*fun doEditData(view: View)

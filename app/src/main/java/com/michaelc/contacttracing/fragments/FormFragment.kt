@@ -77,7 +77,6 @@ class FormFragment : Fragment() {
         try {
 
 
-
             var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
 
             //set the formats for current date and time
@@ -141,43 +140,38 @@ class FormFragment : Fragment() {
             Log.d("LIVELINE", e.toString())
         }
 
-        fun empty(txvn: TextView)
-        {
+        fun empty(txvn: TextView) {
             val dialogBuilder = AlertDialog.Builder(activity!!)
             dialogBuilder.setTitle("Warning")
-            dialogBuilder.setMessage("All fields must be filled in!!\n"+ txvn.hint.toString() +" Is empty")
+            dialogBuilder.setMessage("All fields must be filled in!!\n" + txvn.hint.toString() + " Is empty")
             dialogBuilder.show()
         }
 
         buttonCreate.setOnClickListener {
 
 
-
             try {
-                    if (Name.text.isEmpty()) {
+                if (Name.text.isEmpty()) {
 
-                        empty(Name)
+                    empty(Name)
 
-                    }
-                else if (Number.text.isEmpty())
-                    {
-                        empty(Number)
-                    }
-                else {
-                        //set inputs to class
-                        val cont = ContactDetails(
-                            1,
-                            Name.text.toString(),
-                            Number.text.toString(),
-                            timeLabel.text.toString(),
-                            dateLabel.text.toString()
+                } else if (Number.text.isEmpty()) {
+                    empty(Number)
+                } else {
+                    //set inputs to class
+                    val cont = ContactDetails(
+                        1,
+                        Name.text.toString(),
+                        Number.text.toString(),
+                        timeLabel.text.toString(),
+                        dateLabel.text.toString()
 
-                        )
+                    )
 
-                        db.insertData(cont)
+                    db.insertData(cont)
 
 
-                    }
+                }
             } catch (e: Exception) {
                 Log.d("Darcy", e.toString())
             }
