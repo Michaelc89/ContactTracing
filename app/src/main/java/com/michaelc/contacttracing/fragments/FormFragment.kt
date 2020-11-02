@@ -1,26 +1,25 @@
 package com.michaelc.contacttracing.fragments
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.michaelc.contacttracing.*
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.fragment.app.Fragment
+import com.michaelc.contacttracing.ContactDetails
+import com.michaelc.contacttracing.DatabaseHandler
+import com.michaelc.contacttracing.R
 import kotlinx.android.synthetic.main.fragment_form.*
+import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.Objects.toString
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -77,11 +76,11 @@ class FormFragment : Fragment() {
         try {
 
 
-            var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
+            var formate = SimpleDateFormat("dd/MM/YYYY", Locale.US)
 
             //set the formats for current date and time
             val timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
-            val simpleDateFormat = SimpleDateFormat("dd/MMM/YY")
+            val simpleDateFormat = SimpleDateFormat("dd/MM/YY")
 
             val currentDate: String = simpleDateFormat.format(Date())
             //set date to label
@@ -104,8 +103,7 @@ class FormFragment : Fragment() {
                         val date2 =
                             formate.format(selectedDate.time)//seleccted date to be put in class
                         dateLabel.setText(date2.toString())
-                        //Log.d("Car",selectedDate.toString())
-                        //Toast.makeText(this,"date : " + selectedDate,Toast.LENGTH_SHORT).show()
+
                     },
                     now.get(Calendar.YEAR),
                     now.get(Calendar.MONTH),
@@ -116,7 +114,7 @@ class FormFragment : Fragment() {
             timeLabel.setOnClickListener {
                 val now = Calendar.getInstance()
                 var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
-
+                val simpleDateFormat = SimpleDateFormat("dd/MM/YY")
 
                 val timePicker = TimePickerDialog(
                     this.requireActivity(),
@@ -149,6 +147,20 @@ class FormFragment : Fragment() {
 
         buttonCreate.setOnClickListener {
 
+            //formats
+            val df: DateFormat = SimpleDateFormat("dd/MM/yyyy")
+            //inputted date
+            val dateInput = dateLabel.text.toString()
+            //convert string to date
+            val convertedDate = df.parse(dateInput)
+            // formatted date
+            val formattedDate = df.format(convertedDate)
+
+            Log.d("convertedDate", convertedDate.toString())
+            Log.d("convertedDate", formattedDate.toString())
+            Log.d("convertedDate type", convertedDate.javaClass.name.toString())
+
+
 
             try {
                 if (Name.text.isEmpty()) {
@@ -164,9 +176,9 @@ class FormFragment : Fragment() {
                         Name.text.toString(),
                         Number.text.toString(),
                         timeLabel.text.toString(),
-                        dateLabel.text.toString()
-
-                    )
+                        //dateLabel.text.toString()
+                        convertedDate
+                        )
 
                     db.insertData(cont)
 

@@ -4,7 +4,15 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import android.widget.Toast
+import kotlinx.android.synthetic.main.fragment_form.*
+import java.lang.Exception
+import java.text.DateFormat
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 val DATABASE_NAME = "MYDB"
 val TABLE_NAME = "Contact"
@@ -40,7 +48,7 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         var CV = ContentValues()
         CV.put(COL_NAME, cd.name)
         CV.put(COL_NUMBER, cd.number)
-        CV.put(COL_DATE, cd.date)
+        CV.put(COL_DATE, cd.date.toString())
         CV.put(COL_TIME, cd.time)
         var result = db.insert(TABLE_NAME, null, CV)
         //https://www.youtube.com/watch?v=OxHNcCXnxnE   5:03
@@ -58,17 +66,33 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
     fun readData(): MutableList<ContactDetails> {
         var list: MutableList<ContactDetails> = ArrayList()
 
+
+        val cal: Calendar = Calendar.getInstance()
+
+        val dateHolder: Date = Date(110570)
+
         val db = this.readableDatabase
         val query = "Select * from " + TABLE_NAME
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()) {
             do {
-                var contD = ContactDetails(1, "1", "1", "1", "1")
+                var contD = ContactDetails(1, "1", "1", "1", dateHolder)
                 contD.id = result.getString(result.getColumnIndex(COL_ID)).toInt()
                 contD.name = result.getString(result.getColumnIndex(COL_NAME))
                 contD.number = result.getString(result.getColumnIndex(COL_NUMBER))
                 contD.time = result.getString(result.getColumnIndex(COL_TIME))
-                contD.date = result.getString(result.getColumnIndex(COL_DATE))
+               // contD.date= result.getString(result.getColumnIndex(COL_DATE))
+
+                val date = result.getString(result.getColumnIndex(COL_DATE))//string
+
+                //formats date in way the date obj is formatted
+                val df: DateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)
+
+                //convert string to date
+                val convertedDate = df.parse(date)
+
+                contD.date =  convertedDate
+
                 list.add(contD)
             } while (result.moveToNext())
         }

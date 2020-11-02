@@ -7,14 +7,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.internal.ContextUtils.getActivity
-import com.michaelc.contacttracing.fragments.DataFragment
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.edit_dialog.view.*
-import kotlinx.android.synthetic.main.fragment_data.*
-import kotlinx.android.synthetic.main.item_row.view.*
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class ItemAdapter(
@@ -65,12 +65,25 @@ class ItemAdapter(
 
             var name: String
             var number: String
+            var time: String
+            var date: Date
+
 
             name = a.name
             number = a.number
+            time = a.time
+            date = a.date
+
+            val pattern = "dd/MM/yyyy"
+            val simpleDateFormat = SimpleDateFormat(pattern)
+            val dateString = simpleDateFormat.format(date)
+
+
 
             mDialogView.dialogNameEt.setText(name.toString())
             mDialogView.dialogNumberEt.setText(number.toString())
+            mDialogView.dialogTimeEt.setText(time.toString())
+            mDialogView.dialogDateEt.setText(dateString.toString())
 
             //show dialog
             val mAlertDialog = mBuilder.show()
@@ -81,11 +94,14 @@ class ItemAdapter(
                     val editedName: String
                     val editedNumber: String
 
+
                     editedName = mDialogView.dialogNameEt.text.toString()
                     editedNumber = mDialogView.dialogNumberEt.text.toString()
 
+
                     a.name = editedName
                     a.number = editedNumber
+
 
 
                     var db = DatabaseHandler(context)
@@ -112,10 +128,6 @@ class ItemAdapter(
         }
 
         deleteIcon.setOnClickListener {
-            /* Toast.makeText(
-                 context,
-                 "delete", Toast.LENGTH_SHORT
-             ).show()*/
 
             var a = getItem(position) as ContactDetails
             var db = DatabaseHandler(context)
@@ -125,8 +137,6 @@ class ItemAdapter(
           val gVData = MainActivity.GlobalVariable.mutableListData
             gVData.remove(a)
             notifyDataSetChanged()
-
-
 
         }
         //set the data as a class ContactDetails

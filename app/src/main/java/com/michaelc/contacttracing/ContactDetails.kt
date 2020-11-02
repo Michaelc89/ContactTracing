@@ -1,7 +1,8 @@
 package com.michaelc.contacttracing
 
-import java.sql.Date
-import java.sql.Time
+
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ContactDetails {
 
@@ -10,10 +11,10 @@ class ContactDetails {
     var name: String
     var number: String
     var time: String
-    var date: String
+    var date: Date
 
 
-    constructor(id: Int,name: String,number: String,time: String,date: String) {
+    constructor(id: Int,name: String,number: String,time: String,date: Date) {
         this.id = id
         this.name = name
         this.number = number

@@ -2,6 +2,7 @@ package com.michaelc.contacttracing.fragments
 
 import android.app.Dialog
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,12 +11,16 @@ import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.michaelc.contacttracing.*
 //import com.michaelc.contacttracing.MainActivity.GlobalVariable.adapter
 import com.michaelc.contacttracing.MainActivity.GlobalVariable.mutableListData
 import kotlinx.android.synthetic.main.fragment_data.*
 import kotlinx.android.synthetic.main.item_row.*
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -50,6 +55,7 @@ class DataFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_data, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart() {
         loadDB()
         super.onStart()
@@ -61,6 +67,7 @@ class DataFragment : Fragment() {
         var mutableListData = ArrayList<ContactDetails>()
     }*/
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun loadDB() {
         try {
             //==========================================================================
@@ -76,9 +83,15 @@ class DataFragment : Fragment() {
             //val contact = mutableListData.iterator()
 
             for (item in data) {
+                //val date = SimpleDateFormat("dd-MM-yyyy").parse(item.date)
+                //mutableListData.groupBy { x-> date }
                 MainActivity.GlobalVariable.mutableListData.add(item)
                 Log.d("Gary", item.toString())
+
             }
+
+
+            mutableListData.sortBy { it.date }
 
             //====================================================
             //EDIT DATA
@@ -88,16 +101,12 @@ class DataFragment : Fragment() {
             listView.adapter = adapter
 
 
-
-
-            var positions: Int
-            positions = data.size
-
-
         } catch (e: Exception) {
             Log.d("Simon", e.toString())
             Log.d("Simon2", e.cause.toString())
             Log.d("simon3", e.message.toString())
+            Log.d("simon3", e.cause.toString())
+            Log.d("simon3", e.localizedMessage.toString())
         }
 
     }
