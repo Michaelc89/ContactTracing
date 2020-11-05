@@ -76,6 +76,7 @@ class FormFragment : Fragment() {
         try {
 
 
+
             var formate = SimpleDateFormat("dd/MM/YYYY", Locale.US)
 
             //set the formats for current date and time
