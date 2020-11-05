@@ -81,7 +81,7 @@ class FormFragment : Fragment() {
 
             //set the formats for current date and time
             val timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
-            val simpleDateFormat = SimpleDateFormat("dd/MM/YY")
+            val simpleDateFormat = SimpleDateFormat("dd/MM/YYYY")
 
             val currentDate: String = simpleDateFormat.format(Date())
             //set date to label
@@ -102,7 +102,7 @@ class FormFragment : Fragment() {
                         selectedDate.set(Calendar.MONTH, month)
                         selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                         val date2 =
-                            formate.format(selectedDate.time)//seleccted date to be put in class
+                            formate.format(selectedDate.time)//selected date to be put in class
                         dateLabel.setText(date2.toString())
 
                     },
@@ -115,7 +115,7 @@ class FormFragment : Fragment() {
             timeLabel.setOnClickListener {
                 val now = Calendar.getInstance()
                 var timeFormat = SimpleDateFormat("hh:mm a", Locale.US)
-                val simpleDateFormat = SimpleDateFormat("dd/MM/YY")
+                val simpleDateFormat = SimpleDateFormat("dd/MM/YYYY")
 
                 val timePicker = TimePickerDialog(
                     this.requireActivity(),

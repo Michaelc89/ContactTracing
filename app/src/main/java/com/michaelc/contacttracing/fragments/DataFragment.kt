@@ -87,11 +87,11 @@ class DataFragment : Fragment() {
                 //mutableListData.groupBy { x-> date }
                 MainActivity.GlobalVariable.mutableListData.add(item)
                 Log.d("Gary", item.toString())
-
+                mutableListData.sortBy { it.date }
             }
 
 
-            mutableListData.sortBy { it.date }
+
 
             //====================================================
             //EDIT DATA
