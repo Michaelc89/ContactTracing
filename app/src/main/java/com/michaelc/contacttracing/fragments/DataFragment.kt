@@ -1,26 +1,23 @@
 package com.michaelc.contacttracing.fragments
 
-import android.app.Dialog
+//import com.michaelc.contacttracing.MainActivity.GlobalVariable.adapter
 import android.content.Context
+import android.content.res.Resources
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView.OnItemClickListener
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.michaelc.contacttracing.*
-//import com.michaelc.contacttracing.MainActivity.GlobalVariable.adapter
 import com.michaelc.contacttracing.MainActivity.GlobalVariable.mutableListData
 import kotlinx.android.synthetic.main.fragment_data.*
-import kotlinx.android.synthetic.main.item_row.*
-import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,6 +41,8 @@ class DataFragment : Fragment() {
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
+
+
         }
     }
 
@@ -51,6 +50,14 @@ class DataFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        /*val rowView = inflater.inflate(R.layout.item_row, container, false)
+        val fab = rowView.findViewById(R.id.fab) as FloatingActionButton//floating action button
+        fab.setOnClickListener { view ->
+            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                .setAction("Action", null)
+                .show()
+        }*/
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_data, container, false)
     }
@@ -61,11 +68,11 @@ class DataFragment : Fragment() {
         super.onStart()
         val context: Context = this.context ?: return // or if block
 
+
+
     }
 
-   /* object GlobalVariable {
-        var mutableListData = ArrayList<ContactDetails>()
-    }*/
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun loadDB() {
@@ -90,12 +97,6 @@ class DataFragment : Fragment() {
                 mutableListData.sortBy { it.date }
             }
 
-
-
-
-            //====================================================
-            //EDIT DATA
-            //====================================================
             //adapter = null
             var adapter =  ItemAdapter(context, mutableListData)
             listView.adapter = adapter

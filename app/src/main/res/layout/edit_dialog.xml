@@ -46,7 +46,7 @@
         android:gravity="center">
         <Button
             android:id="@+id/dialogConfirmBtn"
-            android:text="Edit"
+            android:text="Confirm"
             android:background="@color/corYellow"
             android:textColor="@color/corBlack"
             android:layout_width="wrap_content"

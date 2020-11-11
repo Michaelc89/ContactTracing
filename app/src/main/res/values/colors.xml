@@ -10,6 +10,9 @@
     <color name="corBlack">#000000</color>
     <color name="corYellow">#FFEE00</color>
     <color name="corRed">#E61F26</color>
+    <color name="corGrey">#333333</color>
+    <color name="corGrey2">#232F34</color>
+    <color name="corYellow2">#FAAB1A</color>
 
 <!--    <color name="colorPrimary">#6200EE</color>-->
 </resources>

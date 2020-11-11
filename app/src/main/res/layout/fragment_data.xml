@@ -4,22 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.DataFragment"
-    android:background="@color/corBlack"
-    >
-
+    android:background="@color/corGrey2">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-
    <ListView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/listView"
-       android:divider="@color/corYellow"
+       android:divider="@color/corYellow2"
        android:dividerHeight="4px"
        ></ListView>
-
     </LinearLayout>
+
+
 
 </FrameLayout>
