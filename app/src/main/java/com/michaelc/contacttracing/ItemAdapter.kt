@@ -78,11 +78,13 @@ class ItemAdapter(
 
             var name: String
             var number: String
+            var tableNumber: String? // can be null
             var time: String
             var date: Date
 
             name = a.name
             number = a.number
+            tableNumber = a.tableNumber
             time = a.time
             date = a.date
 
@@ -92,6 +94,7 @@ class ItemAdapter(
 
             mDialogView.dialogNameEt.setText(name.toString())
             mDialogView.dialogNumberEt.setText(number.toString())
+            mDialogView.dialogTableNumberEt.setText(tableNumber.toString())
             mDialogView.dialogTimeEt.setText(time.toString())
             mDialogView.dialogDateEt.setText(dateString.toString())
 
@@ -103,14 +106,16 @@ class ItemAdapter(
 
                     val editedName: String
                     val editedNumber: String
+                    val editedTableNumber: String
 
 
                     editedName = mDialogView.dialogNameEt.text.toString()
                     editedNumber = mDialogView.dialogNumberEt.text.toString()
-
+                    editedTableNumber= mDialogView.dialogTableNumberEt.text.toString()
 
                     a.name = editedName
                     a.number = editedNumber
+                    a.tableNumber = editedTableNumber
 
 
 

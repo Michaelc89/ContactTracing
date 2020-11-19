@@ -18,6 +18,7 @@ val DATABASE_NAME = "MYDB"
 val TABLE_NAME = "Contact"
 val COL_NAME = "name"
 val COL_NUMBER = "number"
+val COL_TABLENUMBER = "tablenumber"
 val COL_TIME = "time"
 val COL_DATE = "date"
 val COL_ID = "id"
@@ -29,6 +30,7 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
                 COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 COL_NAME + " VARCHAR(256)," +
                 COL_NUMBER + " VARCHAR(256)," +
+                COL_TABLENUMBER + " VARCHAR(256)," +
                 COL_DATE + " VARCHAR(256)," +
                 COL_TIME + " VARCHAR(256));"
 
@@ -48,6 +50,7 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         var CV = ContentValues()
         CV.put(COL_NAME, cd.name)
         CV.put(COL_NUMBER, cd.number)
+        CV.put(COL_TABLENUMBER,cd.tableNumber)
         CV.put(COL_DATE, cd.date.toString())
         CV.put(COL_TIME, cd.time)
         var result = db.insert(TABLE_NAME, null, CV)
@@ -76,10 +79,11 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         val result = db.rawQuery(query, null)
         if (result.moveToFirst()) {
             do {
-                var contD = ContactDetails(1, "1", "1", "1", dateHolder)
+                var contD = ContactDetails(1, "1", "1","1", "1", dateHolder)
                 contD.id = result.getString(result.getColumnIndex(COL_ID)).toInt()
                 contD.name = result.getString(result.getColumnIndex(COL_NAME))
                 contD.number = result.getString(result.getColumnIndex(COL_NUMBER))
+                contD.tableNumber = result.getString(result.getColumnIndex(COL_TABLENUMBER))
                 contD.time = result.getString(result.getColumnIndex(COL_TIME))
                // contD.date= result.getString(result.getColumnIndex(COL_DATE))
 
@@ -110,6 +114,7 @@ class DatabaseHandler(var context: Context) : SQLiteOpenHelper(context, DATABASE
         val cv = ContentValues()
         cv.put(COL_NAME, ct.name)
         cv.put(COL_NUMBER, ct.number)
+        cv.put(COL_TABLENUMBER,ct.tableNumber)
 
         var result = db.update(TABLE_NAME, cv, " id = " + ct.id, null)
 

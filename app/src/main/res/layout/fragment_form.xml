@@ -11,96 +11,113 @@
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-    <!-- TODO: Update blank fragment layout -->
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent">
-
-
-        <EditText
-            android:id="@+id/Name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="96dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginEnd="164dp"
-            android:layout_marginRight="164dp"
-            android:ems="10"
-            android:hint="Name"
-            android:inputType="textPersonName"
+        <!-- TODO: Update blank fragment layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/Number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="164dp"
-            android:layout_marginRight="164dp"
-            android:ems="10"
-            android:hint="Phone Number"
-            android:inputType="number"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Name" />
-
-        <TextView
-            android:id="@+id/timeLabel"
-            android:layout_width="180dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="96dp"
-            android:layout_marginLeft="96dp"
-            android:layout_marginTop="36dp"
-            android:layout_weight="0"
-            android:background="#0000FF00"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Time"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Number" />
-
-        <TextView
-            android:id="@+id/dateLabel"
-            android:layout_width="180dp"
-            android:layout_height="40dp"
-            android:layout_marginStart="96dp"
-            android:layout_marginLeft="96dp"
-            android:layout_marginTop="28dp"
-            android:layout_weight="1"
-            android:background="#00FF0000"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Date"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/timeLabel" />
-
-        <Button
-            android:id="@+id/buttonCreate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="130dp"
-            android:layout_marginLeft="130dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="193dp"
-            android:layout_marginRight="193dp"
-            android:text="Create Contact"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/dateLabel" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent">
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <EditText
+                android:id="@+id/Name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="96dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="164dp"
+                android:layout_marginRight="164dp"
+                android:ems="10"
+                android:hint="Name"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/Number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="164dp"
+                android:layout_marginRight="164dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Name" />
+
+            <EditText
+                android:id="@+id/TableNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="164dp"
+                android:layout_marginRight="164dp"
+                android:ems="10"
+                android:hint="Table Number"
+                android:inputType="number"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/Number" />
+
+            <TextView
+                android:id="@+id/timeLabel"
+                android:layout_width="210dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="0"
+                android:background="#0000FF00"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Time"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/TableNumber" />
+
+            <TextView
+                android:id="@+id/dateLabel"
+                android:layout_width="210dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:background="#00FF0000"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Date"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/timeLabel" />
+
+            <Button
+                android:id="@+id/buttonCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="130dp"
+                android:layout_marginLeft="130dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="193dp"
+                android:layout_marginRight="193dp"
+                android:text="Create Contact"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateLabel" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </FrameLayout>

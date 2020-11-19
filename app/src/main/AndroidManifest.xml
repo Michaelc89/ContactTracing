@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.michaelc.contacttracing">
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    ActivityCompat.requestPermissions(thisActivity,
+    new String[]{Manifest.permission.WRITE_STORAGE},
+    YOUR_PERMISSION_STATIC_CODE_IDENTIFIER);
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@drawable/tracelogo2"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -26,6 +29,7 @@
             android:screenOrientation="portrait">
 
         </activity>
+
     </application>
 
 </manifest>

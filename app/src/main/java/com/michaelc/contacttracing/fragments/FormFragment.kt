@@ -44,6 +44,7 @@ class FormFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
 
             dateLabel.setText("HELP")
+            TableNumber.setText("0")
             //StartActivity(Intent(this, MainActivity::class.java))
 
             //var db = DatabaseHandler(context)
@@ -176,6 +177,7 @@ class FormFragment : Fragment() {
                         1,
                         Name.text.toString(),
                         Number.text.toString(),
+                        TableNumber.text.toString(),
                         timeLabel.text.toString(),
                         //dateLabel.text.toString()
                         convertedDate

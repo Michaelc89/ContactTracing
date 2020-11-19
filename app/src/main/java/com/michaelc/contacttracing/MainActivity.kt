@@ -1,23 +1,21 @@
 package com.michaelc.contacttracing
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
-import android.content.Intent
+import android.R.attr.data
 import android.os.Bundle
-import android.util.Log
+import android.os.Environment
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.michaelc.contacttracing.fragments.DataFragment
 import com.michaelc.contacttracing.fragments.FormFragment
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_form.*
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //setSupportActionBar(findViewById(R.id))
-
 
 
 
@@ -59,22 +56,102 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+
     //=============================================================================
 //                      MENU BAR
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
-        inflater.inflate(R.menu.action_menu,menu)
+        inflater.inflate(R.menu.action_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
-    //          on click of menu item
-    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
-        //Save to device
-        R.id.device_save -> {
+    //=============================================================================
+    //                  LOADS ALL THE DATA IN THE DB INTO A STRING
+fun getDBDataAndCreateCsvString(): String {
+        //==========================================================================
+        //             INITIATE THE DB
+
+        var db = DatabaseHandler(this)
+
+        var csvData=""
+        //===========================================================================
+        var data = db.readData()
+        if (  data.size ==0)
+        {
             Toast.makeText(
                 this,
-                "You clicked the edit button for id " ,
+                "There is no data in the Database to export ",
+                Toast.LENGTH_SHORT
+            ).show()
+
+        }
+        else
+        {
+            var HEADERS: String = "NAME,NUMBER,TABLE NUMBER,TIME,DATE\n"
+            var str = StringBuilder(HEADERS)
+
+
+            for (item in data) {
+
+                str.append(item.name.toString()).append(",").append(item.number.toString()).append(",").append(
+                    item.tableNumber.toString()
+                ).append(",").append(item.time.toString()).append(",").append(item.date.toString()).append(
+                    "\n"
+                )
+
+            }
+            csvData = str.toString()
+        }
+            return csvData
+
+    }
+
+
+
+
+    //=============================================================================
+
+    //          on click of menu item
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+
+        //Save to device
+        R.id.device_save -> {
+            var csvString: String = ""
+            csvString= getDBDataAndCreateCsvString()//get all the data in the db and place in a csv string
+
+
+            // val path = this!!.filesDir.absolutePath // => /data/user/0/com.example.test/files
+
+//===========================FILE NAME==========================
+            val sdf = SimpleDateFormat("dd/M/yyyy-hh:mm:ss")
+            val currentDate = sdf.format(Date())
+            val fileName = currentDate.toString() + ".csv"
+//==============================================================
+
+            File(fileName).printWriter().use { out ->
+                out.println(csvString)
+                //out.println(outStr2)
+            }
+
+
+
+
+
+            /*Toast.makeText(
+                this,
+                "Saved to "+ getFilesDir()+"/"+fileName ,
+                Toast.LENGTH_SHORT
+            ).show()*/
+
+
+
+
+
+            Toast.makeText(
+                this,
+                "You clicked the edit button for id ",
                 Toast.LENGTH_SHORT
             ).show()
             // User chose the "Settings" item, show the app settings UI...
@@ -84,7 +161,7 @@ class MainActivity : AppCompatActivity() {
         R.id.gmail_save -> {
             Toast.makeText(
                 this,
-                "You clicked the Gmail button for id " ,
+                "You clicked the Gmail button for id ",
                 Toast.LENGTH_SHORT
             ).show()
             // User chose the "Settings" item, show the app settings UI...
@@ -94,7 +171,7 @@ class MainActivity : AppCompatActivity() {
         R.id.gdrive_save -> {
             Toast.makeText(
                 this,
-                "You clicked the drive button for id " ,
+                "You clicked the drive button for id ",
                 Toast.LENGTH_SHORT
             ).show()
             // User chose the "Settings" item, show the app settings UI...

@@ -25,7 +25,7 @@
         android:contentDescription="image"
         android:foreground="?attr/selectableItemBackgroundBorderless"
         android:scaleType="center"
-        android:src="@drawable/ic_edit"
+        android:src="@drawable/ic_edit2"
         />
 
     <ImageView
