@@ -1,8 +1,9 @@
 package com.michaelc.contacttracing
 
-import android.R.attr.data
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -13,6 +14,8 @@ import com.michaelc.contacttracing.fragments.DataFragment
 import com.michaelc.contacttracing.fragments.FormFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -109,6 +112,22 @@ fun getDBDataAndCreateCsvString(): String {
     }
 
 
+    fun getLastModified(directoryFilePath: String?): File? {
+        val directory = File(directoryFilePath)
+        val files = directory.listFiles { obj: File -> obj.isFile }
+        var lastModifiedTime = Long.MIN_VALUE
+        var chosenFile: File? = null
+        if (files != null) {
+            for (file in files) {
+                if (file.lastModified() > lastModifiedTime) {
+                    chosenFile = file
+                    lastModifiedTime = file.lastModified()
+                }
+            }
+        }
+        return chosenFile
+    }
+
 
 
     //=============================================================================
@@ -116,62 +135,94 @@ fun getDBDataAndCreateCsvString(): String {
     //          on click of menu item
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
 
-        //Save to device
+                //Save to device
         R.id.device_save -> {
             var csvString: String = ""
-            csvString= getDBDataAndCreateCsvString()//get all the data in the db and place in a csv string
+            csvString =
+                getDBDataAndCreateCsvString()//get all the data in the db and place in a csv string
 
-
+            val filepath = "MyFileStorage"
             // val path = this!!.filesDir.absolutePath // => /data/user/0/com.example.test/files
 
-//===========================FILE NAME==========================
-            val sdf = SimpleDateFormat("dd/M/yyyy-hh:mm:ss")
+            //===========================FILE NAME==========================
+            val sdf = SimpleDateFormat("dd-M-yyyy") //-hh:mm:ss" : not allowed in file name
             val currentDate = sdf.format(Date())
             val fileName = currentDate.toString() + ".csv"
-//==============================================================
+            //==============================================================
 
-            File(fileName).printWriter().use { out ->
-                out.println(csvString)
-                //out.println(outStr2)
+
+            var myExternalFile: File = File(getExternalFilesDir(filepath), fileName)
+            try {
+                val fileOutPutStream = FileOutputStream(myExternalFile)
+                fileOutPutStream.write(csvString.toByteArray())
+                fileOutPutStream.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
             }
-
-
-
-
-
-            /*Toast.makeText(
-                this,
-                "Saved to "+ getFilesDir()+"/"+fileName ,
-                Toast.LENGTH_SHORT
-            ).show()*/
-
-
-
-
 
             Toast.makeText(
                 this,
-                "You clicked the edit button for id ",
+                "File saved to " + getFilesDir() + "/" + fileName,
                 Toast.LENGTH_SHORT
             ).show()
+
             // User chose the "Settings" item, show the app settings UI...
             true
         }
         //Attach to email
         R.id.gmail_save -> {
+
+
+            val filepath = "MyFileStorage"
+            var absFilePath = getExternalFilesDir(filepath)
+
+            var lastFile = getLastModified(absFilePath.toString())
+
+
+            lateinit var email: String
+            var subject: String = "Contact Tracing"
+            // lateinit var message: String
+            //  lateinit var uri: Uri
+
+            //Create Email
+            try {
+
+                val intent = Intent(Intent.ACTION_SENDTO)
+                intent.data = Uri.parse("mailto:") // only email apps should handle this
+
+                val root: File? = getExternalFilesDir(filepath)
+                val pathToMyAttachedFile = lastFile.toString()
+                val file = File(pathToMyAttachedFile)  //root, before path
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject)
+                val path = Uri.fromFile(file)
+               // intent.putExtra(Uri.parse(path.toString()))// = Uri.parse("mailto:")
+                intent.putExtra(Intent.EXTRA_STREAM,Uri.fromFile(file));//add attachment
+                if (intent.resolveActivity(packageManager) != null) {
+                    startActivity(intent)
+                }
+
+
+
+
+            } catch (t: Throwable) {
+                Toast.makeText(this, "Request failed try again: $t", Toast.LENGTH_LONG).show()
+            } catch (e: Exception) {
+                Log.d("email err", e.toString())
+            }
             Toast.makeText(
                 this,
-                "You clicked the Gmail button for id ",
+                "File sent to Email App",
                 Toast.LENGTH_SHORT
             ).show()
             // User chose the "Settings" item, show the app settings UI...
             true
+
         }
         //Save data to drive
         R.id.gdrive_save -> {
             Toast.makeText(
                 this,
-                "You clicked the drive button for id ",
+                "File saved to Google Drive",
                 Toast.LENGTH_SHORT
             ).show()
             // User chose the "Settings" item, show the app settings UI...
