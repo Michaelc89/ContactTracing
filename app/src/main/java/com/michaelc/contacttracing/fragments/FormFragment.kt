@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.michaelc.contacttracing.ContactDetails
 import com.michaelc.contacttracing.DatabaseHandler
@@ -59,12 +60,14 @@ class FormFragment : Fragment() {
         //val textView = findViewById<TextView>(R.id.dateLabel)
         return inflater.inflate(R.layout.fragment_form, container, false)
 
+
     }
 
     var calObj = Calendar.getInstance()
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onStart() {
+
         //==========================================================================
         //             INITIATE THE DB
         val context: Context = this.context ?: return // or if block
@@ -181,10 +184,13 @@ class FormFragment : Fragment() {
                         timeLabel.text.toString(),
                         //dateLabel.text.toString()
                         convertedDate
-                        )
+                    )
 
                     db.insertData(cont)
 
+                    Name.text=null
+                    Number.text=null
+                    TableNumber.text=null
 
                 }
             } catch (e: Exception) {

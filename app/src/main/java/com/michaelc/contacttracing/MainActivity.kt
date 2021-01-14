@@ -22,7 +22,7 @@ import kotlin.collections.ArrayList
 
 
 class MainActivity : AppCompatActivity() {
-    var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
+//    var formate = SimpleDateFormat("dd MMM, YYYY", Locale.US)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -200,9 +200,6 @@ fun getDBDataAndCreateCsvString(): String {
                 if (intent.resolveActivity(packageManager) != null) {
                     startActivity(intent)
                 }
-
-
-
 
             } catch (t: Throwable) {
                 Toast.makeText(this, "Request failed try again: $t", Toast.LENGTH_LONG).show()
