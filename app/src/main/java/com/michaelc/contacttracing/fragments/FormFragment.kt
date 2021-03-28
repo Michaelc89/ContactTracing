@@ -18,9 +18,11 @@ import com.michaelc.contacttracing.ContactDetails
 import com.michaelc.contacttracing.DatabaseHandler
 import com.michaelc.contacttracing.R
 import kotlinx.android.synthetic.main.fragment_form.*
+import kotlinx.android.synthetic.main.layout_form.*
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.Number
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -38,14 +40,15 @@ class FormFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
 
-            dateLabel.setText("HELP")
-            TableNumber.setText("0")
+            //dateLabel.setText("HELP")
+           // TableNumber.setText("0")
             //StartActivity(Intent(this, MainActivity::class.java))
 
             //var db = DatabaseHandler(context)
@@ -58,7 +61,9 @@ class FormFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         //val textView = findViewById<TextView>(R.id.dateLabel)
-        return inflater.inflate(R.layout.fragment_form, container, false)
+        return inflater.inflate(R.layout.layout_form, container, false)
+       // setContentView(R.layout.layout_form);
+        //cagnge xml file here
 
 
     }
@@ -127,7 +132,7 @@ class FormFragment : Fragment() {
                         val selectedTime = Calendar.getInstance()
                         selectedTime.set(Calendar.HOUR_OF_DAY, hourOfDay)
                         selectedTime.set(Calendar.MINUTE, minute)
-                        timeLabel.text = timeFormat.format(selectedTime.time)
+                       // timeLabel.text = timeFormat.format(selectedTime.time)
 
                         calObj.time = selectedTime.time
                     },
